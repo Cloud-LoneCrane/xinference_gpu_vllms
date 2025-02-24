@@ -488,11 +488,11 @@ class WorkerActor(xo.StatelessActor):
             if idx in self._gpu_to_model_uid:
                 rep_uid = self._gpu_to_model_uid[idx]
                 is_vllm_model = await self.is_model_vllm_backend(rep_uid)
-                if is_vllm_model:
-                    raise RuntimeError(
-                        f"GPU index {idx} has been occupied with a vLLM model: {rep_uid}, "
-                        f"therefore cannot allocate GPU memory for a new model."
-                    )
+                # if is_vllm_model:
+                #     raise RuntimeError(
+                #         f"GPU index {idx} has been occupied with a vLLM model: {rep_uid}, "
+                #         f"therefore cannot allocate GPU memory for a new model."
+                #     )
                 existing_model_uids.append(rep_uid)
             if idx in self._gpu_to_embedding_model_uids:
                 existing_model_uids.extend(self._gpu_to_embedding_model_uids[idx])
@@ -501,11 +501,11 @@ class WorkerActor(xo.StatelessActor):
             if idx in self._user_specified_gpu_to_model_uids:
                 for rep_uid, _ in self._user_specified_gpu_to_model_uids[idx]:
                     is_vllm_model = await self.is_model_vllm_backend(rep_uid)
-                    if is_vllm_model:
-                        raise RuntimeError(
-                            f"User specified GPU index {idx} has been occupied with a vLLM model: {rep_uid}, "
-                            f"therefore cannot allocate GPU memory for a new model."
-                        )
+                    # if is_vllm_model:
+                    #     raise RuntimeError(
+                    #         f"User specified GPU index {idx} has been occupied with a vLLM model: {rep_uid}, "
+                    #         f"therefore cannot allocate GPU memory for a new model."
+                    #     )
 
             if existing_model_uids:
                 logger.warning(
